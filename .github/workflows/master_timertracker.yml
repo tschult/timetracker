@@ -32,4 +32,5 @@ jobs:
         app-name: 'timertracker'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_c624aa6a87144b19bb32af03329d828c }}
+        package: '/build'
         
