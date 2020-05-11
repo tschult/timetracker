@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, Grid, Typography, Paper, Container, ThemeProvider, Switch } from '@material-ui/core';
 import Header from './Header';
 import { createMuiTheme } from '@material-ui/core/styles';
-import { green, lightGreen } from '@material-ui/core/colors';
 
 export default class App extends Component {
 
@@ -17,8 +16,12 @@ export default class App extends Component {
     const theme = createMuiTheme({
       palette: {
         type: this.state.darkMode ? 'dark' : 'light',
-        primary: green,
-        secondary: lightGreen
+        primary: {
+          main: '#1b5e20'
+        },
+        secondary: {
+          main: '#7cb342',
+        }
       }
     });
     return (
@@ -39,7 +42,6 @@ export default class App extends Component {
 
               </Container>
             </Grid>
-
           </Grid>
         </Paper>
       </ThemeProvider>
