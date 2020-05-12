@@ -14,7 +14,7 @@ import { Link, withRouter } from 'react-router-dom';
 
     render() {
 
-        const { match, location, history } = this.props;
+        const { location } = this.props;
         console.log(location);
 
         return (

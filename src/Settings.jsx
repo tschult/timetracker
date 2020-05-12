@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Typography, Container, Paper, List, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Switch, Grid } from '@material-ui/core';
+import React from 'react';
+import { Typography, Paper, List, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Switch, Grid } from '@material-ui/core';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 
 const Settings = (props) => {

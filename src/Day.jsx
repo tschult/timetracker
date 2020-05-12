@@ -1,12 +1,10 @@
-import React, {useState} from 'react';
-import { Paper, Typography, Switch, List, ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction, IconButton } from '@material-ui/core';
+import React from 'react';
+import { Paper, Typography, List, ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction, IconButton } from '@material-ui/core';
 import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
 import TimerOutlinedIcon from '@material-ui/icons/TimerOutlined';
 
 const Day = () =>
 {
-    const [darkMode, setDarkMode] = useState(false);
-
     return (
         <Paper square style={{ paddingBottom: 50 }}>
 
