@@ -1,63 +1,57 @@
 import React, { useState } from 'react';
-import { Typography, Paper, ThemeProvider, Switch, AppBar, List, ListItem, ListItemText, CssBaseline } from '@material-ui/core';
+import { ThemeProvider, AppBar, CssBaseline } from '@material-ui/core';
 import Header from './Header';
 import { createMuiTheme } from '@material-ui/core/styles';
 import Footer from './Footer';
-
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import Day from './Day';
+import Settings from './Settings';
 
 
 
 function App(props) {
 
-  const [darkMode, setDarkMode] = useState(false);
-  const [route, setRoute] = useState('/');
-
-  const handleNavigationChange = (newValue) => {
-    setRoute(newValue);
-  };
-
+  const [settings, setSettings] = useState({ darkMode: false });
+  
   const theme = createMuiTheme({
     palette: {
-      type: darkMode ? 'dark' : 'light',
+      type: settings.darkMode ? 'dark' : 'light',
       primary: {
-        main: '#1b5e20'
+        main: '#388e3c',
       },
       secondary: {
-        main: '#7cb342',
-      }
+        main: '#aeea00',
+      },
     }
   });
 
+  const handleSettingsChanged = (newSettings) => {
+    setSettings(newSettings);
+  };
+
   return (
-    <ThemeProvider theme={theme} >
-      <CssBaseline />
+    <BrowserRouter>
+      <ThemeProvider theme={theme} >
+        <CssBaseline />
 
-      <Header />
+        <Header />
 
-      <Paper square style={{ paddingBottom: 50 }}>
-
-        <Typography variant="h5" gutterBottom align="center">
-          Heute
-          </Typography>
-        <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
-
-        <List >
-          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((sectionId) => (
-            <ListItem key={`item-${sectionId}`}>
-              <ListItemText primary={`Item ${sectionId}`} />
-            </ListItem>
-          ))}
-        </List>
+        <Switch>
+          <Route exact path='/' render={() => <Day />} />
+          <Route path='/settings' render={
+            (props) => <Settings {...props} settings={settings} onSettingsChanged={handleSettingsChanged} />}
+          />
+        </Switch>
 
 
-      </Paper>
-      <AppBar position="fixed" style={{ top: 'auto', bottom: 0 }}>
+        <AppBar position="fixed" style={{ top: 'auto', bottom: 0 }}>
 
-        <Footer value={route} onChange={handleNavigationChange} />
+          <Footer />
 
-      </AppBar>
+        </AppBar>
 
-    </ThemeProvider>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 

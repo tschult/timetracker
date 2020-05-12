@@ -3,8 +3,9 @@ import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 import RestoreIcon from '@material-ui/icons/Restore';
 import TodayIcon from '@material-ui/icons/Today';
 import SettingsIcon from '@material-ui/icons/Settings';
+import { Link, withRouter } from 'react-router-dom';
 
-export default class Footer extends Component {
+ class Footer extends Component {
 
     handleSelectionChange = (event, newValue) => {
         console.log(newValue);
@@ -13,14 +14,20 @@ export default class Footer extends Component {
 
     render() {
 
+        const { match, location, history } = this.props;
+        console.log(location);
+
         return (
-            <BottomNavigation showLabels value={this.props.value} onChange={this.handleSelectionChange}>
-                <BottomNavigationAction label="Heute" icon={<TodayIcon />} value="/" />
+            <BottomNavigation showLabels value={location.pathname} >
+                <BottomNavigationAction label="Heute" icon={<TodayIcon />} value="/" component={Link} to="/" />
                 <BottomNavigationAction label="Woche" icon={<RestoreIcon />} value="/week" />
                 <BottomNavigationAction label="Monat" icon={<RestoreIcon />} value="/month" />
-                <BottomNavigationAction label="Einstellungen" icon={<SettingsIcon />} value="/settings" />
+                <BottomNavigationAction label="Einstellungen" icon={<SettingsIcon />} value="/settings" component={Link} to="/settings" />
             </BottomNavigation>
         );
     }
 
 }
+
+const FooterWithRouter = withRouter(Footer);
+export default FooterWithRouter;
