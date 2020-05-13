@@ -21,7 +21,7 @@ function App(props) {
       },
       secondary: {
         main: '#aeea00',
-      },
+      },      
     }
   });
 

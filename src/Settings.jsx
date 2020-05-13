@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Paper, List, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Switch, Grid } from '@material-ui/core';
+import { Paper, List, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Switch, Grid, ListSubheader } from '@material-ui/core';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 
 const Settings = (props) => {
@@ -14,8 +14,8 @@ const Settings = (props) => {
             <Grid item xs={0} sm={3} md={4} />
             <Grid item xs={12} sm={6} md={4}>
                 <Paper>
-                    <Typography variant="h6" gutterBottom>Settings</Typography>
                     <List>
+                        <ListSubheader>Settings</ListSubheader>
                         <ListItem>
                             <ListItemIcon>
                                 <Brightness4Icon />
