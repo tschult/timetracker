@@ -1,14 +1,21 @@
 import React from 'react';
 import { Paper, List, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Switch, Grid, ListSubheader } from '@material-ui/core';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import NotificationsIcon from '@material-ui/icons/Notifications';
 
 const Settings = (props) => {
     const newSettings = { ...props.settings };
 
-    const HandleToggle = (event, value) => {
+    const HandleDarkModeToggle = (event, value) => {
         newSettings.darkMode = value;
         props.onSettingsChanged(newSettings);
     }
+
+    const HandleNotificationToggle = (event, value) => {
+        newSettings.notificationsEnabled = value;
+        props.onSettingsChanged(newSettings);
+    }
+
     return (
         <Grid container>
             <Grid item xs={false} sm={3} md={4} />
@@ -24,9 +31,23 @@ const Settings = (props) => {
                             <ListItemSecondaryAction>
                                 <Switch
                                     edge="end"
-                                    onChange={HandleToggle}
+                                    onChange={HandleDarkModeToggle}
                                     checked={newSettings.darkMode}
-                                    inputProps={{ 'aria-labelledby': 'switch-list-label-wifi' }}
+                                    inputProps={{ 'aria-labelledby': 'switch-list-label-dark' }}
+                                />
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                        <ListItem>
+                            <ListItemIcon>
+                                <NotificationsIcon />
+                            </ListItemIcon>
+                            <ListItemText id="switch-list-label-notification" primary="Benachrichtigungen aktivieren" />
+                            <ListItemSecondaryAction>
+                                <Switch
+                                    edge="end"
+                                    onChange={HandleNotificationToggle}
+                                    checked={newSettings.notificationsEnabled}
+                                    inputProps={{ 'aria-labelledby': 'switch-list-label-notification' }}
                                 />
                             </ListItemSecondaryAction>
                         </ListItem>

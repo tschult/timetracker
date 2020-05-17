@@ -89,7 +89,7 @@ const Day = () => {
       </Zoom>
 
       <Zoom in={isRunning} timeout={transitionDuration} unmountOnExit>
-        <Fab color="warning" aria-label="stop" className={classes.fab} onClick={stopCurrentTask} >
+        <Fab  aria-label="stop" className={classes.fab} onClick={stopCurrentTask} >
           <StopIcon />
         </Fab>
       </Zoom>

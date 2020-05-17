@@ -6,6 +6,7 @@ import Footer from './Footer';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import Day from './Day';
 import Settings from './Settings';
+import Notification from "react-web-notification";
 
 const useStateWithLocalStorage = (localStorageKey, fallbackValue) => {
 
@@ -26,10 +27,65 @@ const useStateWithLocalStorage = (localStorageKey, fallbackValue) => {
   return [value, setValue];
 }
 
+const ActiveNotification = (props) => {
+
+  const [ignore, setIgnore] = useState(!props.settings.notificationsEnabled);
+  const [title, setTitle] = useState('Test notification');
+
+  console.log('ignore: ' + ignore);
+
+  if (ignore) {
+    return null;
+  }
+
+
+  const handlePermissionGranted = () => {
+    console.log('Permission Granted');
+    setIgnore(false);
+  }
+  const handlePermissionDenied = () => {
+    console.log('Permission Denied');
+    setIgnore(true);
+  }
+  const handleNotSupported = () => {
+    console.log('Web Notification not Supported');
+    setIgnore(true);
+  }
+  const handleNotificationOnClick = (e, tag) => {
+    console.log(e, 'Notification clicked tag:' + tag);
+  }
+  const handleNotificationOnError = (e, tag) => {
+    console.log(e, 'Notification error tag:' + tag);
+  }
+  const handleNotificationOnClose = (e, tag) => {
+    console.log(e, 'Notification closed tag:' + tag);
+  }
+  const handleNotificationOnShow = (e, tag) => {
+    console.log(e, 'Notification shown tag:' + tag);
+  }
+
+  return (
+    <Notification
+      ignore={ignore}
+      notSupported={handleNotSupported}
+      onPermissionGranted={handlePermissionGranted}
+      onPermissionDenied={handlePermissionDenied}
+      onShow={handleNotificationOnShow}
+      onClick={handleNotificationOnClick}
+      onClose={handleNotificationOnClose}
+      onError={handleNotificationOnError}
+      timeout={0}
+      title={title}
+      options={props.options}
+      swRegistration={props.swRegistration}
+    />);
+
+}
+
 
 function App(props) {
 
-  const [settings, setSettings] = useStateWithLocalStorage('settings', { darkMode: false });
+  const [settings, setSettings] = useStateWithLocalStorage('settings', { darkMode: false, notificationsEnabled: false });
 
   const theme = createMuiTheme({
     palette: {
@@ -46,6 +102,18 @@ function App(props) {
   const handleSettingsChanged = (newSettings) => {
     setSettings(newSettings);
   };
+
+  const options = {
+    tag: Date.now(),
+    body: 'Body',
+    icon: 'logo192.png',
+    lang: 'de',
+    dir: 'ltr',
+  }
+  if (props.swRegistration)
+  {
+    options.actions = [{title: 'STOP', action: 'stop'}]
+  }
 
   return (
     <BrowserRouter>
@@ -67,6 +135,13 @@ function App(props) {
           <Footer />
 
         </AppBar>
+
+        <ActiveNotification
+          settings={settings}
+          options={options}
+          swRegistration={props.swRegistration}
+
+        />
 
       </ThemeProvider>
     </BrowserRouter>
