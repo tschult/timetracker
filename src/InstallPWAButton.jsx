@@ -47,7 +47,7 @@ const InstallPWAButton = () => {
     }
 
     return (
-        <IconButton button onclick={handleClick}>
+        <IconButton onClick={handleClick}>
             <GetAppIcon />
         </IconButton>
     )
