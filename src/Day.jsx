@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { Paper, Typography, List, ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction, IconButton, Grid, Fab, Zoom, ListSubheader } from '@material-ui/core';
+import { Paper, Typography, List, ListItem, ListItemText, ListItemIcon, ListItemSecondaryAction, Grid, Fab, Zoom, ListSubheader } from '@material-ui/core';
 import WorkOutlineOutlinedIcon from '@material-ui/icons/WorkOutlineOutlined';
-import TimerOutlinedIcon from '@material-ui/icons/TimerOutlined';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 import { makeStyles, useTheme } from '@material-ui/styles';
@@ -58,13 +57,13 @@ const Day = () => {
   return (
     <div className={classes.root}>
       <Grid container>
-        <Grid item xs={0} sm={3} md={4} />
+        <Grid item xs={false} sm={3} md={4} />
         <Grid item xs={12} sm={6} md={4}>
           <Paper square className={classes.paper}>
 
             <List >
               <ListSubheader>{new Date().toDateString()}</ListSubheader>
-              {items.map((item, idx) => (
+              {items.map((item) => (
                 
                 <ListItem key={`item-${item.startDate}`}>
                   <ListItemIcon>
@@ -80,7 +79,7 @@ const Day = () => {
           </Paper>
 
         </Grid>
-        <Grid item xs={0} sm={3} md={4} />
+        <Grid item xs={false} sm={3} md={4} />
       </Grid>
 
       <Zoom in={!isRunning} timeout={transitionDuration} unmountOnExit>

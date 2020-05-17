@@ -1,7 +1,6 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, IconButton, Slide, useScrollTrigger } from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Slide, useScrollTrigger } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,9 +35,6 @@ const Header = (props) => {
                         <Typography variant="h6" className={classes.title}>
                             Zeiterfassung
                         </Typography>
-                        <IconButton color="inherit" aria-label="Einstellungen">
-                            <AddIcon />
-                        </IconButton>
                     </Toolbar>
                 </AppBar>
             </HideOnScroll>

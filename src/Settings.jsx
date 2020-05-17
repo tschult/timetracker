@@ -1,6 +1,7 @@
 import React from 'react';
 import { Paper, List, ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction, Switch, Grid, ListSubheader } from '@material-ui/core';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
+import InstallPWAListItem from './InstallPWAListItem';
 
 const Settings = (props) => {
     const newSettings = { ...props.settings };
@@ -11,7 +12,7 @@ const Settings = (props) => {
     }
     return (
         <Grid container>
-            <Grid item xs={0} sm={3} md={4} />
+            <Grid item xs={false} sm={3} md={4} />
             <Grid item xs={12} sm={6} md={4}>
                 <Paper>
                     <List>
@@ -30,10 +31,11 @@ const Settings = (props) => {
                                 />
                             </ListItemSecondaryAction>
                         </ListItem>
+                        <InstallPWAListItem/>
                     </List>
                 </Paper>
             </Grid>
-            <Grid item xs={0} sm={3} md={4} />
+            <Grid item xs={false} sm={3} md={4} />
         </Grid>
     );
 }
