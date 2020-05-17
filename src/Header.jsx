@@ -1,6 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Slide, useScrollTrigger } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import InstallPWAButton from "./InstallPWAButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,6 +36,7 @@ const Header = (props) => {
                         <Typography variant="h6" className={classes.title}>
                             Zeiterfassung
                         </Typography>
+                        <InstallPWAButton/>
                     </Toolbar>
                 </AppBar>
             </HideOnScroll>
