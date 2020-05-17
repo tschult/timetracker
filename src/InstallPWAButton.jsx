@@ -47,7 +47,7 @@ const InstallPWAButton = () => {
     }
 
     return (
-        <IconButton onClick={handleClick}>
+        <IconButton color="inherit" onClick={handleClick}>
             <GetAppIcon />
         </IconButton>
     )

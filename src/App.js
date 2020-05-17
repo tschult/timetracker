@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ThemeProvider, AppBar, CssBaseline } from '@material-ui/core';
 import Header from './Header';
 import { createMuiTheme } from '@material-ui/core/styles';
@@ -7,12 +7,30 @@ import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import Day from './Day';
 import Settings from './Settings';
 
+const useStateWithLocalStorage = (localStorageKey, fallbackValue) => {
+
+  const [value, setValue] = useState(() => {
+    try {
+      const item = localStorage.getItem(localStorageKey);
+      return item ? JSON.parse(item) : fallbackValue;
+    } catch (error) {
+      console.log(error);
+      return fallbackValue;
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(localStorageKey, JSON.stringify(value));
+  }, [localStorageKey, value]);
+
+  return [value, setValue];
+}
 
 
 function App(props) {
 
-  const [settings, setSettings] = useState({ darkMode: false });
-  
+  const [settings, setSettings] = useStateWithLocalStorage('settings', { darkMode: false });
+
   const theme = createMuiTheme({
     palette: {
       type: settings.darkMode ? 'dark' : 'light',
@@ -21,7 +39,7 @@ function App(props) {
       },
       secondary: {
         main: '#aeea00',
-      },      
+      },
     }
   });
 
