@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ThemeProvider, AppBar, CssBaseline } from '@material-ui/core';
+import { ThemeProvider, AppBar, CssBaseline, Button } from '@material-ui/core';
 import Header from './Header';
 import { createMuiTheme } from '@material-ui/core/styles';
 import Footer from './Footer';
@@ -103,7 +103,7 @@ function App(props) {
   };
 
   useEffect(() => {
-    if (!settings.notificationsEnabled){
+    if (!settings.notificationsEnabled) {
       return;
     }
     var n;
@@ -114,7 +114,7 @@ function App(props) {
       lang: 'de',
       dir: 'ltr',
       silent: true,
-      
+
     }
     if (props.swRegistration) {
       options.actions = [{ title: 'STOP', action: 'stop' }];
@@ -128,10 +128,9 @@ function App(props) {
     };
     const onAppBlur = (e) => {
 
-      if('serviceWorker' in navigator)
-      {
+      if ('serviceWorker' in navigator) {
         console.log("using serviceWorker: " + navigator.serviceWorker);
-        if (navigator.serviceWorker.controller){
+        if (navigator.serviceWorker.controller) {
           navigator.serviceWorker.ready.then((reg) => {
             console.log('A service worker is active: ', reg.active)
             reg.showNotification('huhu mit sw', options);
@@ -139,31 +138,64 @@ function App(props) {
           return;
 
         }
-        
-        
+
+
       }
       n = new Notification('huhu', options);
 
-      
+
       /* if (props.swRegistration){
         props.swRegistration.showNotification('huhu mit sw', options);
 
       } else{
         
       } */
-      
+
     };
 
-    window.addEventListener('blur', onAppBlur);
+    /* window.addEventListener('blur', onAppBlur);
     window.addEventListener('focus', onAppFocus);
 
     return () => {
       window.removeEventListener('blur', onAppBlur);
       window.removeEventListener('focus', onAppFocus);
-    }
+    } */
   })
 
-  
+  const onNotificationClick = () => {
+    if (!settings.notificationsEnabled) {
+      return;
+    }
+
+    const options = {
+      tag: 'ttRunning',
+      body: 'Body',
+      icon: 'logo192.png',
+      lang: 'de',
+      dir: 'ltr',
+      silent: true,
+    }
+
+    if ('serviceWorker' in navigator) {
+      console.log("using serviceWorker: " + navigator.serviceWorker);
+      if (navigator.serviceWorker.controller) {
+        console.log("active controller: ", navigator.serviceWorker.controller);
+        navigator.serviceWorker.ready.then((reg) => {
+
+          options.actions = [{ title: 'STOP', action: 'stop' }];
+          options.requireInteraction = true;
+
+          console.log('A service worker is active: ', reg.active)
+          reg.showNotification('huhu mit sw', options);
+        })
+        return;
+      }
+    }
+    new Notification('huhu', options);
+
+  }
+
+
 
   return (
     <BrowserRouter>
@@ -171,6 +203,8 @@ function App(props) {
         <CssBaseline />
 
         <Header />
+
+        <Button color="primary" onClick={onNotificationClick}>Send Notification</Button>
 
         <Switch>
           <Route exact path='/' render={() => <Day />} />
