@@ -103,7 +103,23 @@ function App(props) {
   };
 
   useEffect(() => {
+    if (!settings.notificationsEnabled){
+      return;
+    }
     var n;
+    const options = {
+      tag: 'ttRunning',
+      body: 'Body',
+      icon: 'logo192.png',
+      lang: 'de',
+      dir: 'ltr',
+      silent: true,
+      
+    }
+    if (props.swRegistration) {
+      options.actions = [{ title: 'STOP', action: 'stop' }];
+      options.requireInteraction = true;
+    }
     const onAppFocus = (e) => {
       if (n) {
         n.close();
@@ -111,7 +127,31 @@ function App(props) {
 
     };
     const onAppBlur = (e) => {
-      n = new Notification('huhu');
+
+      if('serviceWorker' in navigator)
+      {
+        console.log("using serviceWorker: " + navigator.serviceWorker);
+        if (navigator.serviceWorker.controller){
+          navigator.serviceWorker.ready.then((reg) => {
+            console.log('A service worker is active: ', reg.active)
+            reg.showNotification('huhu mit sw', options);
+          })
+          return;
+
+        }
+        
+        
+      }
+      n = new Notification('huhu', options);
+
+      
+      /* if (props.swRegistration){
+        props.swRegistration.showNotification('huhu mit sw', options);
+
+      } else{
+        
+      } */
+      
     };
 
     window.addEventListener('blur', onAppBlur);
@@ -123,16 +163,7 @@ function App(props) {
     }
   })
 
-  const options = {
-    tag: Date.now(),
-    body: 'Body',
-    icon: 'logo192.png',
-    lang: 'de',
-    dir: 'ltr',
-  }
-  if (props.swRegistration) {
-    options.actions = [{ title: 'STOP', action: 'stop' }]
-  }
+  
 
   return (
     <BrowserRouter>
