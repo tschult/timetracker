@@ -6,7 +6,6 @@ import Footer from './Footer';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import Day from './Day';
 import Settings from './Settings';
-import Notification from "react-web-notification";
 
 const useStateWithLocalStorage = (localStorageKey, fallbackValue) => {
 
@@ -27,7 +26,7 @@ const useStateWithLocalStorage = (localStorageKey, fallbackValue) => {
   return [value, setValue];
 }
 
-const ActiveNotification = (props) => {
+/* const ActiveNotification = (props) => {
 
   const [ignore, setIgnore] = useState(!props.settings.notificationsEnabled);
   const [title, setTitle] = useState('Test notification');
@@ -80,7 +79,7 @@ const ActiveNotification = (props) => {
       swRegistration={props.swRegistration}
     />);
 
-}
+} */
 
 
 function App(props) {
@@ -103,6 +102,27 @@ function App(props) {
     setSettings(newSettings);
   };
 
+  useEffect(() => {
+    var n;
+    const onAppFocus = (e) => {
+      if (n) {
+        n.close();
+      }
+
+    };
+    const onAppBlur = (e) => {
+      n = new Notification('huhu');
+    };
+
+    window.addEventListener('blur', onAppBlur);
+    window.addEventListener('focus', onAppFocus);
+
+    return () => {
+      window.removeEventListener('blur', onAppBlur);
+      window.removeEventListener('focus', onAppFocus);
+    }
+  })
+
   const options = {
     tag: Date.now(),
     body: 'Body',
@@ -110,9 +130,8 @@ function App(props) {
     lang: 'de',
     dir: 'ltr',
   }
-  if (props.swRegistration)
-  {
-    options.actions = [{title: 'STOP', action: 'stop'}]
+  if (props.swRegistration) {
+    options.actions = [{ title: 'STOP', action: 'stop' }]
   }
 
   return (
@@ -136,12 +155,12 @@ function App(props) {
 
         </AppBar>
 
-        <ActiveNotification
+        {/* <ActiveNotification
           settings={settings}
           options={options}
           swRegistration={props.swRegistration}
 
-        />
+        /> */}
 
       </ThemeProvider>
     </BrowserRouter>
